@@ -16,8 +16,8 @@ import com.jamerson.socialbooksapi.services.exceptions.LivroNaoEncontradoExcepti
 public class ResourceExceptionHandler {
 
 	@ExceptionHandler(LivroNaoEncontradoException.class)
-	public ResponseEntity<DetalhesErro> handleLivroNaoEncontradoException
-											(LivroNaoEncontradoException e, HttpServletRequest request){
+	public ResponseEntity<DetalhesErro> handleLivroNaoEncontradoException(LivroNaoEncontradoException e,
+			HttpServletRequest request) {
 		DetalhesErro erro = new DetalhesErro();
 		erro.setStatus(404l);
 		erro.setTitulo("Livro não encontrado!");
@@ -25,10 +25,10 @@ public class ResourceExceptionHandler {
 		erro.setTimestamp(System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
 	}
-	
+
 	@ExceptionHandler(AutorExistenteException.class)
-	public ResponseEntity<DetalhesErro> handleAutorExistenteException
-											(AutorExistenteException e, HttpServletRequest request){
+	public ResponseEntity<DetalhesErro> handleAutorExistenteException(AutorExistenteException e,
+			HttpServletRequest request) {
 		DetalhesErro erro = new DetalhesErro();
 		erro.setStatus(409l);
 		erro.setTitulo("Autor já existe!");
@@ -36,10 +36,10 @@ public class ResourceExceptionHandler {
 		erro.setTimestamp(System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(erro);
 	}
-	
+
 	@ExceptionHandler(AutorNaoEncontradoException.class)
-	public ResponseEntity<DetalhesErro> handleAutorNaoEncontradoException
-											(AutorNaoEncontradoException e, HttpServletRequest request){
+	public ResponseEntity<DetalhesErro> handleAutorNaoEncontradoException(AutorNaoEncontradoException e,
+			HttpServletRequest request) {
 		DetalhesErro erro = new DetalhesErro();
 		erro.setStatus(404l);
 		erro.setTitulo("O autor não pode ser encontrado!");
