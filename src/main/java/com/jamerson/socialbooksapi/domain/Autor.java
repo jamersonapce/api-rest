@@ -1,5 +1,6 @@
 package com.jamerson.socialbooksapi.domain;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -16,7 +20,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Entity
 public class Autor {
 
-	@JsonInclude(Include.NON_NULL)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
@@ -24,7 +27,9 @@ public class Autor {
 	private String nome;
 	
 	@JsonInclude(Include.NON_NULL)
-	private Date nascimento;
+	@JsonFormat(pattern = "dd/MM/yyyy")
+	@Temporal(TemporalType.DATE)
+	private Calendar nascimento;
 	
 	@JsonInclude(Include.NON_NULL)
 	private String nacionalidade;
@@ -49,11 +54,11 @@ public class Autor {
 		this.nome = nome;
 	}
 
-	public Date getNascimento() {
+	public Calendar getNascimento() {
 		return nascimento;
 	}
 
-	public void setNascimento(Date nascimento) {
+	public void setNascimento(Calendar nascimento) {
 		this.nascimento = nascimento;
 	}
 
