@@ -27,42 +27,22 @@ public class AutoresResources {
 	public AutoresResources(AutoresService autoresService) {
 		this.autoresService = autoresService;
 	}
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Autor>> listar(){
+	public ResponseEntity<List<Autor>> listar() {
 		return ResponseEntity.status(HttpStatus.OK).body(autoresService.listar());
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> salvar(@RequestBody Autor autor){
+	public ResponseEntity<Void> salvar(@RequestBody Autor autor) {
 		autor = autoresService.salvar(autor);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(autor.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Optional<Autor>> buscar(@PathVariable("id") Long id){
+	public ResponseEntity<Optional<Autor>> buscar(@PathVariable("id") Long id) {
 		return ResponseEntity.status(HttpStatus.OK).body(autoresService.buscar(id));
 	}
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
