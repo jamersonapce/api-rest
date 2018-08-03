@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.jamerson.socialbooksapi.domain.Comentario;
 import com.jamerson.socialbooksapi.domain.Livro;
 import com.jamerson.socialbooksapi.services.LivrosService;
 
@@ -21,9 +22,8 @@ import com.jamerson.socialbooksapi.services.LivrosService;
 @RequestMapping("/livros")
 public class LivrosResources {
 
-	
 	private final LivrosService livrosService;
-	
+
 	@Autowired
 	public LivrosResources(LivrosService livrosService) {
 		this.livrosService = livrosService;
@@ -32,11 +32,7 @@ public class LivrosResources {
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> salvar(@RequestBody Livro livro) {
 		livro = livrosService.salvar(livro);
-		URI uri = ServletUriComponentsBuilder
-					.fromCurrentRequest()
-					.path("/{id}")
-					.buildAndExpand(livro.getId())
-					.toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(livro.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
@@ -47,7 +43,7 @@ public class LivrosResources {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> buscar(@PathVariable("id") Long id) {
-		Optional<Livro> livro = livrosService.buscar(id);;
+		Optional<Livro> livro = livrosService.buscar(id);
 		return ResponseEntity.status(HttpStatus.OK).body(livro);
 	}
 
@@ -63,4 +59,37 @@ public class LivrosResources {
 		livrosService.atualizar(livro);
 		return ResponseEntity.noContent().build();
 	}
+
+	@RequestMapping(value = "/{id}/comentarios", method = RequestMethod.POST)
+	public ResponseEntity<Void> adicionaComentario(@PathVariable("id") Long livroId, @RequestBody Comentario comentario) {
+		livrosService.salvarComentario(livroId, comentario);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
+		return ResponseEntity.created(uri).build();
+
+	}
+	
+	@RequestMapping(value =  "/{id}/comentarios", method = RequestMethod.GET)
+	public ResponseEntity<List<Comentario>> listarComentarios(@PathVariable("id") Long livroId){
+		List<Comentario> comentarios = livrosService.listarComentarios(livroId);
+		return ResponseEntity.status(HttpStatus.OK).body(comentarios);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

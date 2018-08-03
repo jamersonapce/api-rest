@@ -1,6 +1,6 @@
 package com.jamerson.socialbooksapi.domain;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -19,16 +21,23 @@ public class Livro {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String nome;
+
 	@JsonInclude(Include.NON_NULL)
-	private Date publicacao;
+	@Temporal(TemporalType.DATE)
+	private Calendar publicacao;
+
 	@JsonInclude(Include.NON_NULL)
 	private String editora;
+
 	@JsonInclude(Include.NON_NULL)
 	private String resumo;
+
 	@JsonInclude(Include.NON_NULL)
 	@OneToMany(mappedBy = "livro")
 	private List<Comentario> comentarios;
+
 	@JsonInclude(Include.NON_NULL)
 	private String autor;
 
@@ -55,11 +64,11 @@ public class Livro {
 		this.nome = nome;
 	}
 
-	public Date getPublicacao() {
+	public Calendar getPublicacao() {
 		return publicacao;
 	}
 
-	public void setPublicacao(Date publicacao) {
+	public void setPublicacao(Calendar publicacao) {
 		this.publicacao = publicacao;
 	}
 

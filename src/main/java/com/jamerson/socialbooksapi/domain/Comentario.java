@@ -1,6 +1,6 @@
 package com.jamerson.socialbooksapi.domain;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -21,12 +23,15 @@ public class Comentario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@JsonInclude(Include.NON_NULL)
+	
 	private String texto;
-	@JsonInclude(Include.NON_NULL)
+	
 	private String usuario;
+	
 	@JsonInclude(Include.NON_NULL)
-	private Date data;
+	@Temporal(TemporalType.DATE)
+	private Calendar data;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LIVRO_ID")
 	@JsonIgnore
@@ -56,12 +61,20 @@ public class Comentario {
 		this.usuario = usuario;
 	}
 
-	public Date getData() {
+	public Calendar getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(Calendar data) {
 		this.data = data;
+	}
+
+	public Livro getLivro() {
+		return livro;
+	}
+
+	public void setLivro(Livro livro) {
+		this.livro = livro;
 	}
 
 }
