@@ -1,7 +1,6 @@
 package com.jamerson.socialbooksapi.domain;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -11,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,18 +25,21 @@ public class Autor {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long Id;
 	
+	@NotEmpty(message = "O campo nome não pode ser vazio.")
 	private String nome;
 	
 	@JsonInclude(Include.NON_NULL)
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
+	@NotNull(message = "Campo nascimento é de preenchimento obrigatório.")
 	private Calendar nascimento;
 	
 	@JsonInclude(Include.NON_NULL)
+	@NotNull(message = "Campo nacionalidade é de preenchimento obrigatório.")
 	private String nacionalidade;
 	
-	@OneToMany(mappedBy = "autor")
 	@JsonIgnore
+	@OneToMany(mappedBy = "autor")
 	private List<Livro> livros;
 
 	public Long getId() {

@@ -11,11 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
 public class Comentario {
@@ -24,6 +27,9 @@ public class Comentario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@JsonProperty("comentário")
+	@NotEmpty(message = "O comentário deve ser preenchido.")
+	@Size(max = 1500, message = "O comentário não pode conter mais de 1500 caracteres.")
 	private String texto;
 	
 	@JsonInclude(Include.NON_NULL)
@@ -34,9 +40,9 @@ public class Comentario {
 	@Temporal(TemporalType.DATE)
 	private Calendar data;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "LIVRO_ID")
-	@JsonIgnore
 	private Livro livro;
 
 	public Long getId() {
